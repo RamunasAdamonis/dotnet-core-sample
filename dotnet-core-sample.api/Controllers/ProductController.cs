@@ -37,5 +37,15 @@ namespace dotnet_core_sample.api.Controllers
                 .ToListAsync();
             return Ok(summary);
         }
+
+        [HttpGet("list")]
+        public async Task<ActionResult<object>> GetList()
+        {
+            var products = await _dbContext.Products
+                .OrderBy(x => x.ProductType)
+                .ThenByDescending(x => x.Price.Amount)
+                .ToListAsync();
+            return Ok(products);
+        }
     }
 }
